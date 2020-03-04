@@ -138,6 +138,8 @@ if dri_drivers.contains('auto')
       dri_drivers = ['i915', 'i965', 'r100', 'r200', 'nouveau']
     elif ['arm', 'aarch64'].contains(host_machine.cpu_family())
       dri_drivers = []
+    elif ['mips', 'mips64'].contains(host_machine.cpu_family())
+      dri_drivers = ['r100', 'r200', 'nouveau']
     else
       error('Unknown architecture @0@. Please pass -Ddri-drivers to set driver options. Patches gladly accepted to fix this.'.format(
             host_machine.cpu_family()))
@@ -173,6 +175,10 @@ if gallium_drivers.contains('auto')
       gallium_drivers = [
         'kmsro', 'v3d', 'vc4', 'freedreno', 'etnaviv', 'nouveau',
         'tegra', 'virgl', 'lima', 'panfrost', 'swrast'
+      ]
+    elif ['mips', 'mips64'].contains(host_machine.cpu_family())
+      gallium_drivers = [
+        'kmsro', 'etnaviv', 'nouveau', 'swrast'
       ]
     else
       error('Unknown architecture @0@. Please pass -Dgallium-drivers to set driver options. Patches gladly accepted to fix this.'.format(
@@ -226,6 +232,8 @@ if _vulkan_drivers.contains('auto')
       _vulkan_drivers = ['amd', 'intel']
     elif ['arm', 'aarch64'].contains(host_machine.cpu_family())
       _vulkan_drivers = []
+    elif ['mips', 'mips64'].contains(host_machine.cpu_family())
+      _vulkan_drivers = ['amd']
     else
       error('Unknown architecture @0@. Please pass -Dvulkan-drivers to set driver options. Patches gladly accepted to fix this.'.format(
             host_machine.cpu_family()))
